@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ctx="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd ">
+	
+	<ctx:annotation-config></ctx:annotation-config>
+	<ctx:component-scan base-package="com.cognizant.*"></ctx:component-scan>
+	
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix" value="/WEB-INF/jsp/"></property>
+	<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<bean id="propertyplaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="location" value="classpath:dbInfo.properties"></property>
+	</bean>
+	
+	<bean id="datasource" class="com.cognizant.helper.DataSource">
+	<property name="driver" value="${driver}"></property>
+	<property name="url" value="${url}"></property>
+	<property name="username" value="${username}"></property>
+	<property name="password" value="${password}"></property>
+	</bean>
+	
+	<bean id="productquery" class="com.cognizant.helper.ProductQuery">
+	<property name="selectAllProductsQuery" value="select * from product"></property>
+	<property name="selectProductCategoryName" value="select category_name from product_categories"></property>
+	<property name="insertProduct" value="insert into product values(?,?,?,?,?)"></property>
+	<property name="checkProduct" value="select * from product where product_id=? or category=?"></property>
+	</bean>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<property name="basenames">
+	<list>
+	<value>
+	WEB-INF/resources/error
+	</value>
+	</list>
+	</property>
+	
+	</bean>
+	
+	
+</beans>
